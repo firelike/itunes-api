@@ -93,7 +93,7 @@ return array(
                             'description' => 'The media type you want to search for. For example: movie. The default is all.'
                         ],
                         'entity' => [
-                            'type' => 'date-time',
+                            'type' => 'string',
                             'location' => 'query',
                             'description' => 'The type of results you want returned, relative to the specified media type.For example: movieArtist for a movie media type search. '
                         ],
