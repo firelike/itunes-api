@@ -38,7 +38,16 @@ other configuration settings. Make sure to remove `.dist` from your file.Your `i
 <?php
 return [
     'itunes_service' => [
-        'api_key' => '<your-api-key>',
+        'log'=>[
+            'enable'=>false,
+            'message_formats'=>[
+                '{method} {uri} HTTP/{version} {req_body}',
+                'RESPONSE: {code} - {res_body}',
+            ],
+            'logger'=>[
+                 'stream' => 'php://output',
+            ]
+        ]
     ]
 ];
 ```
@@ -49,8 +58,8 @@ Calling from your code:
 
 ```php
         use Firelike\ITunes\Request\AbstractRequest;
-        use Firelike\ITunes\Request\Search\Search as SearchRequest;
-        use Firelike\ITunes\Service\SearchService;
+        use Firelike\ITunes\Request\Search as SearchRequest;
+        use Firelike\ITunes\Service\ITunesService;
 
         
         $request = new SearchRequest();
@@ -58,7 +67,7 @@ Calling from your code:
             ->setMedia('audiobook')
             ->setLimit(25);
 
-        $service = new SearchService();
+        $service = new ITunesService();
         $result = $service->search($request);
         
         $numberOfRecords = $result->toArray()['resultCount];
@@ -72,16 +81,20 @@ Calling from your code:
 Using the console:
 
 ```php
-php public/index.php itunes searcg -v
+php public/index.php itunes search -v
 ```
 ## Implemented Service Methods:
 
 * **search**
 * **lookup**
-
+* **feed**
+* **availableFeeds**
+* **genres**
 
 
 ## Links
 
 * [Zend Framework website](http://framework.zend.com)
 * [iTunes Search API](https://affiliate.itunes.apple.com/resources/documentation/itunes-store-web-service-search-api/)
+* [Apple RSS feeds](http://www.apple.com/rss/)
+* [iTunes RSS Feed Generator](https://rss.itunes.apple.com/)

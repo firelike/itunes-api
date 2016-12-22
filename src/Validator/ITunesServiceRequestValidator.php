@@ -4,9 +4,8 @@ namespace Firelike\ITunes\Validator;
 
 use Firelike\ITunes\Request\AbstractRequest;
 use Zend\Validator\AbstractValidator;
-use Zend\Validator\Isbn\Isbn13;
 
-class SearchServiceRequestValidator extends AbstractValidator
+class ITunesServiceRequestValidator extends AbstractValidator
 {
     /**
      * @var MediaValidator
@@ -17,6 +16,11 @@ class SearchServiceRequestValidator extends AbstractValidator
      * @var EntityValidator
      */
     protected $entityValidator;
+
+    /**
+     * @var FeedTypeValidator
+     */
+    protected $feedTypeValidator;
 
     /**
      * @param mixed $request
@@ -42,18 +46,18 @@ class SearchServiceRequestValidator extends AbstractValidator
         if (method_exists($request, 'getEntity')) {
             if ($request->getEntity()) {
                 $validator = $this->getEntityValidator();
-                if (!$validator->isValid($request->getEntity())) {
+                if (!$validator->isValid($request)) {
                     $this->setMessage('Invalid entity');
                     return false;
                 }
             }
         }
 
-        if (method_exists($request, 'getIsbn')) {
-            if ($request->getIsbn()) {
-                $validator = new Isbn13();
-                if (!$validator->isValid($request->getIsbn())) {
-                    $this->setMessage('Invalid ISBN-13');
+        if (method_exists($request, 'getType')) {
+            if ($request->getType()) {
+                $validator = $this->getFeedTypeValidator();
+                if (!$validator->isValid($request->getType())) {
+                    $this->setMessage('Invalid Feed Type');
                     return false;
                 }
             }
@@ -93,6 +97,22 @@ class SearchServiceRequestValidator extends AbstractValidator
     public function setEntityValidator($entityValidator)
     {
         $this->entityValidator = $entityValidator;
+    }
+
+    /**
+     * @return FeedTypeValidator
+     */
+    public function getFeedTypeValidator()
+    {
+        return $this->feedTypeValidator;
+    }
+
+    /**
+     * @param FeedTypeValidator $feedTypeValidator
+     */
+    public function setFeedTypeValidator($feedTypeValidator)
+    {
+        $this->feedTypeValidator = $feedTypeValidator;
     }
 
 

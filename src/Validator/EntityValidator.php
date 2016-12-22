@@ -2,42 +2,37 @@
 namespace Firelike\ITunes\Validator;
 
 
-use Firelike\ITunes\Request\Search\Search;
+use Firelike\ITunes\Request\Search as SearchRequest;
 use Zend\Validator\AbstractValidator;
+use Zend\Validator\InArray;
 
 class EntityValidator extends AbstractValidator
 {
     /**
-     * @param mixed $value
+     * @param mixed $request
      * @return bool
      */
-    public function isValid($value)
+    public function isValid($request)
     {
+        // do not evaluate if the request is not a Search request
+        if (!$request instanceof SearchRequest) {
+            return true;
+        }
 
         $inArrayValidator = new InArray();
 
-        $haystack = [
-            'movie',
-            'podcast',
-            'music',
-            'musicVideo',
-            'audiobook',
-            'shortFilm',
-            'tvShow',
-            'software',
-            'ebook',
-            'all'
-        ];
+        $haystack = $this->generateHaystack($request);
         $inArrayValidator->setHaystack($haystack);
 
-        if (!$inArrayValidator->isValid($value)) {
-            $this->setMessage(sprintf('invalid entity for media type provided: %s . expecting % s', $value, implode(' or ', $haystack)));
+        if (!$inArrayValidator->isValid($request->getEntity())) {
+            $this->setMessage(sprintf('invalid entity for media type provided: %s . expecting % s', $request->getEntity(), implode(' or ', $haystack)));
             return false;
         }
 
+        return true;
     }
 
-    protected function generateHaystack(Search $request)
+    protected function generateHaystack(SearchRequest $request)
     {
 
         $entities = [

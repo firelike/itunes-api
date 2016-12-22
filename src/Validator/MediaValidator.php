@@ -8,7 +8,7 @@ use Zend\Validator\InArray;
 class MediaValidator extends AbstractValidator
 {
     /**
-     * @param mixed $value
+     * @param string $value
      * @return bool
      */
     public function isValid($value)

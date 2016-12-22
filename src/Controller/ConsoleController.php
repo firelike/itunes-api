@@ -1,16 +1,17 @@
 <?php
 namespace Firelike\ITunes\Controller;
 
-use Firelike\ITunes\Request\AbstractRequest;
-use Firelike\ITunes\Request\Search\Search as SearchRequest;
-use Firelike\ITunes\Request\Search\Lookup as LookupRequest;
+use Firelike\ITunes\Request\AvailableFeeds;
+use Firelike\ITunes\Request\Feed;
+use Firelike\ITunes\Request\Search as SearchRequest;
+use Firelike\ITunes\Request\Lookup as LookupRequest;
 use Zend\Mvc\Console\Controller\AbstractConsoleController;
 
 
 class ConsoleController extends AbstractConsoleController
 {
     /**
-     * @var \Firelike\ITunes\Service\SearchService
+     * @var \Firelike\ITunes\Service\ITunesService
      */
     protected $service;
 
@@ -24,10 +25,8 @@ class ConsoleController extends AbstractConsoleController
         if ($term) {
             $request->setTerm($term);
         } else {
-            $request->setList('fiction');
+            $request->setTerm('fiction');
         }
-
-        $request->setSortOrder(AbstractRequest::SORT_ORDER_ASC);
 
         $result = $this->getService()->search($request);
 
@@ -60,6 +59,63 @@ class ConsoleController extends AbstractConsoleController
         $this->markEnd();
     }
 
+    public function feedAction()
+    {
+        $this->markBegin();
+
+        $request = new Feed();
+
+        $genre = $this->getRequest()->getParam('genre');
+        if ($genre) {
+            $request->setGenre($genre);
+        } else {
+            $request->setGenre('123456');
+        }
+
+        $result = $this->getService()->feed($request);
+
+        $records = $result->toArray()['results'];
+
+        var_dump($records);
+
+        $this->markEnd();
+    }
+
+    public function availableFeedsAction()
+    {
+        $this->markBegin();
+
+        $request = new AvailableFeeds();
+
+        $country = $this->getRequest()->getParam('country');
+        if ($country) {
+            $request->setCountry($country);
+        } else {
+            $request->setCountry('us');
+        }
+
+        $result = $this->getService()->availableFeeds($request);
+
+        $records = $result->toArray()['results'];
+
+        var_dump($records);
+
+        $this->markEnd();
+    }
+
+    public function genresAction()
+    {
+        $this->markBegin();
+
+        $result = $this->getService()->genres();
+        $records = $result->toArray()['results'];
+
+        var_dump($records);
+
+        $this->markEnd();
+    }
+
+
     public function markBegin()
     {
         $delimiter = str_repeat('=', 10);
@@ -86,7 +142,7 @@ class ConsoleController extends AbstractConsoleController
     }
 
     /**
-     * @return \Firelike\ITunes\Service\SearchService
+     * @return \Firelike\ITunes\Service\ITunesService
      */
     public function getService()
     {
@@ -94,7 +150,7 @@ class ConsoleController extends AbstractConsoleController
     }
 
     /**
-     * @param \Firelike\ITunes\Service\SearchService $service
+     * @param \Firelike\ITunes\Service\ITunesService $service
      */
     public function setService($service)
     {

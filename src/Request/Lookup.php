@@ -1,7 +1,6 @@
 <?php
-namespace Firelike\ITunes\Request\Search;
+namespace Firelike\ITunes\Request;
 
-use Firelike\ITunes\Request\AbstractRequest;
 
 class Lookup extends AbstractRequest
 {

@@ -7,10 +7,11 @@ return array(
     ),
     'service_manager' => array(
         'factories' => array(
-            Firelike\ITunes\Service\SearchService::class => Firelike\ITunes\Service\Factory\SearchServiceFactory::class,
-            Firelike\ITunes\Validator\SearchServiceRequestValidator::class => Firelike\ITunes\Validator\Factory\SearchServiceRequestValidatorFactory::class,
-            Firelike\ITunes\Validator\MediaValidator::class => Firelike\ITunes\Validator\Factory\MediaValidatorFactory::class,
+            Firelike\ITunes\Service\ITunesService::class => Firelike\ITunes\Service\Factory\ITunesServiceFactory::class,
+            Firelike\ITunes\Validator\ITunesServiceRequestValidator::class => Firelike\ITunes\Validator\Factory\ITunesServiceRequestValidatorFactory::class,
             Firelike\ITunes\Validator\EntityValidator::class => Firelike\ITunes\Validator\Factory\EntityValidatorFactory::class,
+            Firelike\ITunes\Validator\FeedTypeValidator::class => Firelike\ITunes\Validator\Factory\FeedTypeValidatorFactory::class,
+            Firelike\ITunes\Validator\MediaValidator::class => Firelike\ITunes\Validator\Factory\MediaValidatorFactory::class,
         )
     ),
     'console' => array(
@@ -31,6 +32,33 @@ return array(
                         'defaults' => array(
                             'controller' => 'Firelike\ITunes\Controller\Console',
                             'action' => 'lookup'
+                        )
+                    )
+                ),
+                'itunes-feed' => array(
+                    'options' => array(
+                        'route' => 'itunes feed [--genre=] [--verbose|-v]',
+                        'defaults' => array(
+                            'controller' => 'Firelike\ITunes\Controller\Console',
+                            'action' => 'feed'
+                        )
+                    )
+                ),
+                'itunes-available-feeds' => array(
+                    'options' => array(
+                        'route' => 'itunes available-feeds [--country=] [--verbose|-v]',
+                        'defaults' => array(
+                            'controller' => 'Firelike\ITunes\Controller\Console',
+                            'action' => 'available-feeds'
+                        )
+                    )
+                ),
+                'itunes-genres' => array(
+                    'options' => array(
+                        'route' => 'itunes genres [--verbose|-v]',
+                        'defaults' => array(
+                            'controller' => 'Firelike\ITunes\Controller\Console',
+                            'action' => 'genres'
                         )
                     )
                 ),
@@ -155,19 +183,58 @@ return array(
                 ],
                 'feed_command' => [
                     'httpMethod' => 'GET',
-                    'uri' => '/svc/books/v3/reviews.json',
+                    'uri' => '/rss/{type}/limit={size}{+genre}/{format}',
                     'responseModel' => 'getResponse',
                     'parameters' => [
-                        'api-key' => [
+                        'type' => [
                             'type' => 'string',
                             'required' => true,
-                            'location' => 'query'
+                            'location' => 'uri'
                         ],
-                        'author' => [
+                        'size' => [
+                            'type' => 'integer',
+                            'required' => true,
+                            'default' => 100,
+                            'location' => 'uri'
+                        ],
+                        'genre' => [
+                            'type' => 'integer',
+                            'required' => false,
+                            'location' => 'uri',
+                            'filters' => array(
+                                function ($data) {
+                                    return '/genre=' . $data;
+                                }
+                            ),
+                        ],
+                        'format' => [
                             'type' => 'string',
-                            'location' => 'query'
+                            'required' => true,
+                            'default' => 'json',
+                            'location' => 'uri',
+                            'pattern' => '/^json|xml$/'
                         ]
                     ]
+                ],
+                'available_feeds_command' => [
+                    'httpMethod' => 'GET',
+                    'uri' => '/WebObjects/MZStoreServices.woa/wa/RSS/wsAvailableFeeds',
+                    'responseModel' => 'getResponse',
+                    'parameters' => [
+                        'cc' => [
+                            'type' => 'string',
+                            'required' => true,
+                            'default' => 'us',
+                            'location' => 'query',
+                            'description' => 'fetch available feeds by country code'
+                        ]
+                    ]
+                ],
+                'genres' => [
+                    'httpMethod' => 'GET',
+                    'uri' => '/WebObjects/MZStoreServices.woa/ws/genres',
+                    'responseModel' => 'getResponse',
+                    'parameters' => [],
                 ]
             ],
             'models' => [

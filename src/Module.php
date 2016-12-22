@@ -19,6 +19,9 @@ class Module implements ConsoleUsageProviderInterface
             // Describe available commands
             'itunes search [--term=] [--verbose|-v]' => 'call search service method',
             'itunes lookup [--id=] [--verbose|-v]' => 'call lookup service method',
+            'itunes feed [--genre=] [--verbose|-v]' => 'call feed service method',
+            'itunes available-feeds [--country=] [--verbose|-v]' => 'call availableFeeds service method',
+            'itunes genres [--verbose|-v]' => 'call genres service method',
 
             // Describe expected parameters
             array(
