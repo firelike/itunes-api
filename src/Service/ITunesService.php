@@ -10,7 +10,7 @@ use GuzzleHttp\Command\Guzzle\GuzzleClient;
 use GuzzleHttp\Command\ResultInterface;
 
 /**
- * Class BooksService
+ * Class ITunesService
  * @package Firelike\ITunes\Service
  *
  * @method ResultInterface search_command(array $args)
