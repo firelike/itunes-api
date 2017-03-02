@@ -70,10 +70,10 @@ Calling from your code:
         $service = new ITunesService();
         $result = $service->search($request);
         
-        $numberOfRecords = $result->toArray()['resultCount];
+        $numberOfRecords = $result->toArray()['resultCount'];
         var_dump($numberOfRecords);
 
-        $records= $result->toArray()['results];
+        $records= $result->toArray()['results'];
         var_dump($records);
         
 ```

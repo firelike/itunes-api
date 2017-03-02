@@ -1,4 +1,11 @@
 <?php
+if (!function_exists('itunes_genre_filter')) {
+    function itunes_genre_filter($data)
+    {
+        return '/genre=' . $data;
+    }
+}
+
 return array(
     'controllers' => array(
         'factories' => [
@@ -201,11 +208,7 @@ return array(
                             'type' => 'integer',
                             'required' => false,
                             'location' => 'uri',
-                            'filters' => array(
-                                function ($data) {
-                                    return '/genre=' . $data;
-                                }
-                            ),
+                            'filters'=>['itunes_genre_filter']
                         ],
                         'format' => [
                             'type' => 'string',
