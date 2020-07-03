@@ -4,7 +4,7 @@ namespace Firelike\ITunes\Controller\Factory;
 
 use Firelike\ITunes\Controller\ConsoleController;
 use Firelike\ITunes\Service\ITunesService;
-use Zend\ServiceManager\Factory\FactoryInterface;
+use Laminas\ServiceManager\Factory\FactoryInterface;
 use Interop\Container\ContainerInterface;
 
 

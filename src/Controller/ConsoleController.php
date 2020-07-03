@@ -5,7 +5,7 @@ use Firelike\ITunes\Request\AvailableFeeds;
 use Firelike\ITunes\Request\Feed;
 use Firelike\ITunes\Request\Search as SearchRequest;
 use Firelike\ITunes\Request\Lookup as LookupRequest;
-use Zend\Mvc\Console\Controller\AbstractConsoleController;
+use Laminas\Mvc\Console\Controller\AbstractConsoleController;
 
 
 class ConsoleController extends AbstractConsoleController

@@ -3,8 +3,8 @@ namespace Firelike\ITunes\Validator;
 
 
 use Firelike\ITunes\Request\Search as SearchRequest;
-use Zend\Validator\AbstractValidator;
-use Zend\Validator\InArray;
+use Laminas\Validator\AbstractValidator;
+use Laminas\Validator\InArray;
 
 class EntityValidator extends AbstractValidator
 {

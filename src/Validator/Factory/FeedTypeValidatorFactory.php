@@ -4,7 +4,7 @@ namespace Firelike\ITunes\Validator\Factory;
 
 use Firelike\ITunes\Validator\FeedTypeValidator;
 use Interop\Container\ContainerInterface;
-use Zend\ServiceManager\Factory\FactoryInterface;
+use Laminas\ServiceManager\Factory\FactoryInterface;
 
 class FeedTypeValidatorFactory implements FactoryInterface
 {

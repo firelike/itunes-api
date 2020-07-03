@@ -9,10 +9,10 @@ use GuzzleHttp\HandlerStack;
 use GuzzleHttp\MessageFormatter;
 use GuzzleHttp\Middleware;
 use Psr\Http\Message\ResponseInterface;
-use Zend\Log\Logger;
-use Zend\Log\PsrLoggerAdapter;
-use Zend\Log\Writer\Stream as StreamWriter;
-use Zend\ServiceManager\Factory\FactoryInterface;
+use Laminas\Log\Logger;
+use Laminas\Log\PsrLoggerAdapter;
+use Laminas\Log\Writer\Stream as StreamWriter;
+use Laminas\ServiceManager\Factory\FactoryInterface;
 use Interop\Container\ContainerInterface;
 use GuzzleHttp\Client;
 

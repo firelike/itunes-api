@@ -7,7 +7,7 @@ use Firelike\ITunes\Validator\FeedTypeValidator;
 use Firelike\ITunes\Validator\ITunesServiceRequestValidator;
 use Firelike\ITunes\Validator\MediaValidator;
 use Interop\Container\ContainerInterface;
-use Zend\ServiceManager\Factory\FactoryInterface;
+use Laminas\ServiceManager\Factory\FactoryInterface;
 
 class ITunesServiceRequestValidatorFactory implements FactoryInterface
 {

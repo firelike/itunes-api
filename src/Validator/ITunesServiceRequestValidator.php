@@ -3,7 +3,7 @@ namespace Firelike\ITunes\Validator;
 
 
 use Firelike\ITunes\Request\AbstractRequest;
-use Zend\Validator\AbstractValidator;
+use Laminas\Validator\AbstractValidator;
 
 class ITunesServiceRequestValidator extends AbstractValidator
 {
