@@ -6,7 +6,7 @@
 
 ## Introduction
 
-Zend Framework module to consume iTunes API
+Laminas/Zend Framework module to consume iTunes API
 
 ## Installation
 Install the module using Composer into your application's vendor directory. Add the following line to your

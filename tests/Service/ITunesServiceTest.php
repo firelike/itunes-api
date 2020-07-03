@@ -148,9 +148,12 @@ class ITunesServiceTest extends \PHPUnit_Framework_TestCase
     public function testFeed()
     {
         $request = new Feed();
+
+        $genre = 50000024;
+
         $request->setType('topaudiobooks')
             ->setSize(20)
-            ->setGenre(50000024)
+            //->setGenre($genre)
             ->setFormat('json');
 
         $result = $this->service->feed($request);
